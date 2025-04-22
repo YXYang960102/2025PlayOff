@@ -4,11 +4,18 @@
 
 package frc.robot.subsystems;
 
+import java.util.function.DoubleSupplier;
+
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
@@ -18,17 +25,37 @@ public class DriverTrain extends SubsystemBase {
   private SparkMax BACK_LEFT_MOTOR = new SparkMax(DriveConstants.BACK_LEFT_MOTOR_PORT, MotorType.kBrushless);
   private SparkMax BACK_RIGHT_MOTOR = new SparkMax(DriveConstants.BACK_RIGHT_MOTOR_PORT, MotorType.kBrushless);
 
-  private SparkMaxConfig FRONT_LEFT_CONFIG = new SparkMaxConfig();
+  private SparkMaxConfig config = new SparkMaxConfig();
+  
 
   private DifferentialDrive m_drive = new DifferentialDrive(FRONT_LEFT_MOTOR, FRONT_RIGHT_MOTOR);
 
   /** Creates a new DriverTrain. */
   public DriverTrain() {
+  config.smartCurrentLimit(80);
+
+  config.follow(FRONT_LEFT_MOTOR);
+  BACK_LEFT_MOTOR.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+  config.follow(FRONT_RIGHT_MOTOR);
+  BACK_RIGHT_MOTOR.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+  config.disableFollowerMode();
+  config.idleMode(IdleMode.kBrake);
+  FRONT_LEFT_MOTOR.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+  config
+  .inverted(true)
+  .idleMode(IdleMode.kBrake);
+  FRONT_RIGHT_MOTOR.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  public Command ArcadeDrive(DriverTrain driverTrain, DoubleSupplier xSpeed, DoubleSupplier zRotation){
+    return Commands.run(() -> m_drive.arcadeDrive(xSpeed.getAsDouble(), zRotation.getAsDouble()), driverTrain);
   }
 }
