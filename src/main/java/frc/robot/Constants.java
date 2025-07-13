@@ -50,6 +50,48 @@ public final class Constants {
     public static final int BACK_RIGHT_MOTOR_PORT = 4;
   }
 
+  // Intake
+  public static class IntakeConstants {
+    public static final int ANGLE_MOTOR_PORT = 5;
+    public static final int Intake_MOTOR_PORT = 6;
+
+    public static final double kAngleUpLimit = 0;
+    public static final double kAngleDownLimit = 0;
+
+    // Algae Angle PID
+    public static final double AlgaekP = 10.5;
+    public static final double AlgaekI = 0.0;
+    public static final double AlgaekD = 0.0;
+    public static final double AlgaekIz = 0;
+    public static final double AlgaekFF = 0;
+    public static final double AlgaekMaxOutput = 1;
+    public static final double AlgaekMinOutput = -1;
+
+    public enum AlgaeGrabberState {
+      kDefult(0),
+      kIndex(0),
+      kGet(0);
+      
+
+      public final double position;
+  
+      private AlgaeGrabberState(double position) {
+        this.position = position;
+      }
+
+    public enum IntakeAction {
+      kUP(0.5),
+      kDown(-0.5),
+      kStop(0);
+
+      public final double rate;
+
+      private IntakeAction(double rate) {
+        this.rate = rate;
+      }
+    
+  }
+
   
 
   // Limelight
@@ -70,30 +112,5 @@ public final class Constants {
     }
   }
 
-  // Reff
-  public static final class AprilTagConstants {
-    public static final int ID2Angle[] = {
-        54,
-        306,
-        90,
-        180,
-        180,
-        60,
-        0,
-        300,
-        240,
-        180, // 10
-        120,
-        306, // 12
-        54,
-        180,
-        180,
-        90,
-        300,
-        0,
-        60,
-        120,
-        180,
-        240 }; // 22
-  }
+
 }
