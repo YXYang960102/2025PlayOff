@@ -12,13 +12,15 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.LimelightConstants.Limelight;
+import frc.robot.commands.DriveCommand;
+import frc.robot.subsystems.DriverTrain;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.SwerveFieldRelative;
-import frc.robot.subsystems.SwerveSubsystem;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -28,7 +30,7 @@ import frc.robot.subsystems.SwerveSubsystem;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+  private final DriverTrain driverTrain = new DriverTrain();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private static CommandXboxController m_driverController = new CommandXboxController(
@@ -67,11 +69,11 @@ public class RobotContainer {
   }
 
   private void setDefaultCommand() {
-    swerveSubsystem.setDefaultCommand(new SwerveFieldRelative(swerveSubsystem,
-        () -> -m_driverController.getLeftY(), // X-Axis
-        () -> -m_driverController.getLeftX(), // Y-Axis
-        () -> -m_driverController.getRightX() // R-Axis
-    ));
+    driverTrain.setDefaultCommand(new DriveCommand(
+      () -> -m_driverController.getLeftY() * 
+          (m_driverController.getHID().getRightBumperButton() ? 1 : 0.5), 
+      () -> -m_driverController.getRightX(),
+       driverTrain));
   }
 
   /**

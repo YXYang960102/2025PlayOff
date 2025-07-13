@@ -42,98 +42,15 @@ public final class Constants {
     }
   }
 
-  // SwerveModule
-  public static class ModuleConstants {
-    public static final double kWheelDiameterMeters = Units.inchesToMeters(4);
-    public static final double kDriveMotorGearRatio = 1.0 / 6.122; // MK3:1.0 / 8.16;
-    public static final double kTurningMotorGearRatio = 1 / (150 / 7.0);// MK3: 1 / 8.16
-    public static final double kDriveEncoderRot2Meter = kDriveMotorGearRatio * Math.PI * kWheelDiameterMeters;
-    public static final double kTurningEncoderRot2Rad = kTurningMotorGearRatio * 2 * Math.PI;
-    public static final double kDriveEncoderRPM2MeterPerSec = kDriveEncoderRot2Meter / 60;
-    public static final double kTurningEncoderRPM2RadPerSec = kTurningEncoderRot2Rad / 60;
-
-    // Used in working code currently
-    public static final double kPTurning = 0.5;
-
-    // These two used for simulation currently
-    public static final double kITurning = 0.0;
-    public static final double kDTurning = 0.005;
-
-  }
-
-  // Swerve Drive
+  // Drive Train
   public static class DriveConstants {
-    // Distance between right and left wheels
-    public static final double kTrackWidth = 0.585;
-
-    // Distance between front and back wheels
-    public static final double kWheelBase = kTrackWidth;
-
-    // Need to update to correct values, I dont remember the value we set last meet
-    public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
-        new Translation2d(kWheelBase / 2, kTrackWidth / 2), // FL
-        new Translation2d(kWheelBase / 2, -kTrackWidth / 2), // FR
-        new Translation2d(-kWheelBase / 2, kTrackWidth / 2), // BL
-        new Translation2d(-kWheelBase / 2, -kTrackWidth / 2)); // BR
-
-    public static final boolean kFrontLeftDriveMotorReversed = true;
-    public static final boolean kFrontRightDriveMotorReversed = true;
-    public static final boolean kBackLeftDriveMotorReversed = true;
-    public static final boolean kBackRightDriveMotorReversed = true;
-
-    public static final boolean kFrontLeftTurningMotorReversed = true;
-    public static final boolean kFrontRightTurningMotorReversed = true;
-    public static final boolean kBackLeftTurningMotorReversed = true;
-    public static final boolean kBackRightTurningMotorReversed = true;
-
-    public static final int FRONT_LEFT_DRIVE_PORT = 4;
-    public static final int FRONT_RIGHT_DRIVE_PORT = 3;
-    public static final int BACK_LEFT_DRIVE_PORT = 2;
-    public static final int BACK_RIGHT_DRIVE_PORT = 1;
-
-    public static final int FRONT_LEFT_TURNING_PORT = 8;
-    public static final int FRONT_RIGHT_TURNING_PORT = 7;
-    public static final int BACK_LEFT_TURNING_PORT = 6;
-    public static final int BACK_RIGHT_TURNING_PORT = 5;
-
-    // -------> ABE <-------- //
-    public static final int kFrontLeftDriveAbsoluteEncoderPort = 4;
-    public static final int kFrontRightDriveAbsoluteEncoderPort = 3;
-    public static final int kBackLeftDriveAbsoluteEncoderPort = 2;// 1
-    public static final int kBackRightDriveAbsoluteEncoderPort = 1;// 2
-
-    public static final double kPhysicalMaxSpeedMetersPerSecond = 4.5;// 5.5
-    public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * Math.PI;
-
-    public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond;
-    public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond;
-    public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 2;
-    public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 2;// 2
-
-    public static final double kPTheta = 0.04;// 0.012
-    public static final double kITheta = 0.0;// 0.01
-    public static final double kDTheta = 0.0;// 0.00015
-    public static final double kIZTheta = 60.0;// 60.0
-
-    public static final double kMaxDriveMotorTemp = 33.0;
-
-    public static final double kMotorMaxOutput = 1;
-
-    public static final double kPLockHeading = 0.02;
-    public static final double kILockHeading = 0.025;
-    public static final double kDLockHeading = 0.001;
+    public static final int FRONT_LEFT_MOTOR_PORT = 1;
+    public static final int FRONT_RIGHT_MOTOR_PORT = 2;
+    public static final int BACK_LEFT_MOTOR_PORT = 3;
+    public static final int BACK_RIGHT_MOTOR_PORT = 4;
   }
 
-  // Auto
-  public static final class AutoConstants {
-    public static final double kAutoDriveMaxSpeedMetersPerSecond = DriveConstants.kPhysicalMaxSpeedMetersPerSecond;
-
-    public static final PPHolonomicDriveController pathFollowerConfig = new PPHolonomicDriveController(
-        new PIDConstants(5, 0, 0), // Translation constants
-        new PIDConstants(3, 0, 0), // Rotation constants
-        // // Drive base radius (distance from center to furthest module)
-        new Translation2d(DriveConstants.kWheelBase / 2, DriveConstants.kTrackWidth / 2).getNorm());
-  }
+  
 
   // Limelight
   public static final class LimelightConstants {
