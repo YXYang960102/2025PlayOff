@@ -58,16 +58,16 @@ public final class Constants {
     public static final double kAngleUpLimit = 0;
     public static final double kAngleDownLimit = 0;
 
-    // Algae Angle PID
-    public static final double AlgaekP = 10.5;
-    public static final double AlgaekI = 0.0;
-    public static final double AlgaekD = 0.0;
-    public static final double AlgaekIz = 0;
-    public static final double AlgaekFF = 0;
-    public static final double AlgaekMaxOutput = 1;
-    public static final double AlgaekMinOutput = -1;
+    //  Angle PID
+    public static final double AnglekP = 0.0;
+    public static final double AnglekI = 0.0;
+    public static final double AnglekD = 0.0;
+    public static final double AnglekIz = 0;
+    public static final double AnglekFF = 0;
+    public static final double AnglekMaxOutput = 1;
+    public static final double AnglekMinOutput = -1;
 
-    public enum AlgaeGrabberState {
+    public enum IntakeState {
       kDefult(0),
       kIndex(0),
       kGet(0);
@@ -75,7 +75,7 @@ public final class Constants {
 
       public final double position;
   
-      private AlgaeGrabberState(double position) {
+      private IntakeState(double position) {
         this.position = position;
       }
 
@@ -91,7 +91,23 @@ public final class Constants {
       }
     
   }
+}
 
+  // Shooter
+  public static final class ShooterConstants {
+    public static final int SHOOTER_MOTOR_PORT = 7;
+
+    public enum ShooterAction {
+      kShoote(0),
+      kStop(0);
+
+      public final double rate;
+
+      private ShooterAction(double rate){
+        this.rate = rate;
+      }
+    }
+  }
   
 
   // Limelight
@@ -113,4 +129,5 @@ public final class Constants {
   }
 
 
+}
 }
