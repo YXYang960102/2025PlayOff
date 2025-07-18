@@ -94,7 +94,8 @@ public final class Constants {
 
     public enum IntakeAction {
       kGet(0.7),
-      kRev(-0.5);
+      kRev(-0.5),
+      kStop(0);
 
       public final double rate;
 

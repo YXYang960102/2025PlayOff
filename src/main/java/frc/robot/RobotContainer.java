@@ -16,10 +16,9 @@ import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-
-import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.DriverTrain;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.Drive.DriveCommand;
 
 
 /**

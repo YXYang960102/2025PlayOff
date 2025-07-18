@@ -22,7 +22,7 @@ import frc.robot.Constants.IntakeConstants.IntakeState;
 import frc.robot.Constants.IntakeConstants.AngleAction;
 import frc.robot.Constants.IntakeConstants.IntakeAction;
 
-public class Intake extends SubsystemBase {
+public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new Intake. */
   private SparkMax Intake_MOTOR = new SparkMax(IntakeConstants.Intake_MOTOR_PORT, MotorType.kBrushless);
   private SparkMax Angle_MOTOR = new SparkMax(IntakeConstants.ANGLE_MOTOR_PORT, MotorType.kBrushless);
@@ -32,7 +32,7 @@ public class Intake extends SubsystemBase {
   private SparkAbsoluteEncoder AngleAbsEncoder = Angle_MOTOR.getAbsoluteEncoder();
   private SparkClosedLoopController AnglePIDController = Angle_MOTOR.getClosedLoopController();
 
-  public Intake() {
+  public IntakeSubsystem() {
     AngleEncoder.setPosition(AngleAbsEncoder.getPosition());
 
     IntakeConfig
