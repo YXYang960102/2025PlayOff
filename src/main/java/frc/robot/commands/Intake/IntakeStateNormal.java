@@ -18,12 +18,16 @@ public class IntakeStateNormal extends Command {
     AngleAction angleAction
   ) {
     // Use addRequirements() here to declare subsystem dependencies.
-    
+    this.intakeSubsystem = intakeSubsystem;
+    this.angleAction = angleAction;
+    addRequirements(intakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    intakeSubsystem.setAngleAction(angleAction);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -31,7 +35,9 @@ public class IntakeStateNormal extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    intakeSubsystem.setAngleAction(AngleAction.kStop);
+  }
 
   // Returns true when the command should end.
   @Override
