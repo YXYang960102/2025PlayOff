@@ -44,8 +44,8 @@ public final class Constants {
 
   // Drive Train
   public static class DriveConstants {
-    public static final int FRONT_LEFT_MOTOR_PORT = 1;
-    public static final int FRONT_RIGHT_MOTOR_PORT = 2;
+    public static final int FRONT_LEFT_MOTOR_PORT = 5;
+    public static final int FRONT_RIGHT_MOTOR_PORT = 6;
     public static final int BACK_LEFT_MOTOR_PORT = 3;
     public static final int BACK_RIGHT_MOTOR_PORT = 4;
   }
@@ -109,10 +109,11 @@ public final class Constants {
 
   // Shooter
   public static final class ShooterConstants {
-    public static final int SHOOTER_MOTOR_PORT = 7;
+    public static final int SHOOTER_LEFT_MOTOR_PORT = 1;
+    public static final int SHOOTER_RIGHT_MOTOR_PORT = 2;
 
     public enum ShooterAction {
-      kShoote(0),
+      kShoote(1),
       kStop(0);
 
       public final double rate;

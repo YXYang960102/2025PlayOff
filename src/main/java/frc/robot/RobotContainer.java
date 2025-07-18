@@ -17,8 +17,11 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.DriverTrain;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.ShooterConstants.ShooterAction;
 import frc.robot.commands.Drive.DriveCommand;
+import frc.robot.commands.Shooter.ShooterNormal;
 
 
 /**
@@ -30,6 +33,8 @@ import frc.robot.commands.Drive.DriveCommand;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriverTrain driverTrain = new DriverTrain();
+
+  private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private static CommandXboxController m_driverController = new CommandXboxController(
@@ -60,7 +65,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
   
-    
+    m_driverController.rightBumper().onTrue(new ShooterNormal(shooterSubsystem, ShooterAction.kShoote));
+    m_driverController.leftBumper().onTrue(new ShooterNormal(shooterSubsystem, ShooterAction.kStop));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
@@ -70,7 +76,7 @@ public class RobotContainer {
   private void setDefaultCommand() {
     driverTrain.setDefaultCommand(new DriveCommand(
       () -> -m_driverController.getLeftY() * 
-          (m_driverController.getHID().getRightBumperButton() ? 1 : 0.5), 
+          (m_driverController.getHID().getStartButton() ? 1 : 0.5), 
       () -> -m_driverController.getRightX(),
        driverTrain));
   }
