@@ -55,6 +55,8 @@ public final class Constants {
     public static final int ANGLE_MOTOR_PORT = 5;
     public static final int Intake_MOTOR_PORT = 6;
 
+    public static final double kAngleMotorRatio = 0.0;
+
     public static final double kAngleUpLimit = 0;
     public static final double kAngleDownLimit = 0;
 

@@ -19,6 +19,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.IntakeConstants.IntakeState;
+import frc.robot.Constants.IntakeConstants.AngleAction;
 import frc.robot.Constants.IntakeConstants.IntakeAction;
 
 public class Intake extends SubsystemBase {
@@ -74,9 +75,9 @@ public class Intake extends SubsystemBase {
    Intake_MOTOR.set(action.rate);
   }
 
-  // public void setAngleAction(CoralGrabberAngleAction action) {
-  //   CoralGrabberAngleMotor.set(action.rate);
-  // }
+  public void setAngleAction(AngleAction action) {
+    Angle_MOTOR.set(action.rate);
+  }
 
   public void setState(IntakeState state) {
     AnglePIDController.setReference(state.position, ControlType.kPosition);
