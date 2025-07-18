@@ -19,7 +19,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.IntakeConstants.IntakeState;
-import frc.robot.Constants.IntakeConstants.IntakeState.IntakeAction;
+import frc.robot.Constants.IntakeConstants.IntakeAction;
 
 public class Intake extends SubsystemBase {
   /** Creates a new Intake. */

@@ -67,31 +67,42 @@ public final class Constants {
     public static final double AnglekMaxOutput = 1;
     public static final double AnglekMinOutput = -1;
 
+    public enum AngleAction {
+      kUP(0),
+      kDown(0),
+      kStop(0);
+
+      public final double rate;
+
+      private AngleAction(double rate) {
+        this.rate = rate;
+      }
+    }
+
     public enum IntakeState {
       kDefult(0),
-      kIndex(0),
-      kGet(0);
-      
+      kGetBall(0);
 
       public final double position;
-  
+
       private IntakeState(double position) {
         this.position = position;
       }
+    }
 
     public enum IntakeAction {
-      kUP(0.5),
-      kDown(-0.5),
-      kStop(0);
+      kGet(0.7),
+      kRev(-0.5);
 
       public final double rate;
 
       private IntakeAction(double rate) {
         this.rate = rate;
       }
-    
+    }
+  
   }
-}
+
 
   // Shooter
   public static final class ShooterConstants {
@@ -129,5 +140,5 @@ public final class Constants {
   }
 
 
-}
-}
+
+  }
