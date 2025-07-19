@@ -10,6 +10,7 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.util.Color;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -122,6 +123,21 @@ public final class Constants {
         this.rate = rate;
       }
     }
+  }
+
+  public static final class LEDConstants {
+     // LED
+    public static final int LED_LEFT_START = 0;
+    public static final int LED_LEFT_END = 0;
+    public static final int LED_RIGHT_START = 0;
+    public static final int LED_RIGHT_END = 0;
+
+    // LED Color
+    public static final Color LED_RED = new Color(255, 0, 0);
+    public static final Color LED_GREEN = new Color(0, 255, 0);
+    public static final Color LED_BLUE = new Color(0, 0, 255);
+    public static final Color LED_OFF = new Color(0, 0, 0);
+    
   }
   
 
