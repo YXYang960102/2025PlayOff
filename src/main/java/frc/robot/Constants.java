@@ -113,7 +113,7 @@ public final class Constants {
     public static final int SHOOTER_RIGHT_MOTOR_PORT = 2;
 
     public enum ShooterAction {
-      kShoote(1),
+      kShoote(1.0),
       kStop(0);
 
       public final double rate;
