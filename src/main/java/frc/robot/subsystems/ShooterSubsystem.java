@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import static edu.wpi.first.units.Units.Kilo;
+
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkMax;
@@ -17,7 +19,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.Constants.ShooterConstants.ShooterAction;
+// import frc.robot.Constants.ShooterConstants.ShooterAction;
 
 public class ShooterSubsystem extends SubsystemBase {
   private SparkMax SHOOTER_LEFT_MOTOR = new SparkMax(ShooterConstants.SHOOTER_LEFT_MOTOR_PORT, MotorType.kBrushless);
@@ -27,8 +29,12 @@ public class ShooterSubsystem extends SubsystemBase {
   private RelativeEncoder ShooterLEncoder = SHOOTER_LEFT_MOTOR.getEncoder();
   /** Creates a new ShooterSubsystem. */
   public ShooterSubsystem() {
-    SHOOTER_RIGHT_Config.follow(SHOOTER_LEFT_MOTOR, true);
+    // SHOOTER_RIGHT_Config.follow(SHOOTER_LEFT_MOTOR, false);
    
+    SHOOTER_RIGHT_Config
+    .idleMode(IdleMode.kCoast)
+    .inverted(false)
+    .smartCurrentLimit(80);
 
     SHOOTER_LEFT_Config
     .idleMode(IdleMode.kCoast)
@@ -43,13 +49,19 @@ public class ShooterSubsystem extends SubsystemBase {
     return ShooterLEncoder.getVelocity();
   }
 
-  public void setShooterAction(ShooterAction action) {
-    SHOOTER_LEFT_MOTOR.set(action.rate);
+  public void setShooterAction() {
+    SHOOTER_LEFT_MOTOR.set(ShooterConstants.kLShoote);
+    SHOOTER_RIGHT_MOTOR.set(ShooterConstants.kRShoote);
+  }
+
+  public void StopMotor() {
+    SHOOTER_LEFT_MOTOR.set(ShooterConstants.kStop);
+    SHOOTER_RIGHT_MOTOR.set(ShooterConstants.kStop);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.getNumber("Shooter Velocity", getVelocity());
+    SmartDashboard.putNumber("Shooter Velocity", getVelocity());
   }
 }

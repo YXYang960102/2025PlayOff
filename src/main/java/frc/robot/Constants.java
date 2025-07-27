@@ -45,8 +45,8 @@ public final class Constants {
 
   // Drive Train
   public static class DriveConstants {
-    public static final int FRONT_LEFT_MOTOR_PORT = 5;
-    public static final int FRONT_RIGHT_MOTOR_PORT = 6;
+    public static final int FRONT_LEFT_MOTOR_PORT = 1;
+    public static final int FRONT_RIGHT_MOTOR_PORT = 2;
     public static final int BACK_LEFT_MOTOR_PORT = 3;
     public static final int BACK_RIGHT_MOTOR_PORT = 4;
   }
@@ -56,10 +56,12 @@ public final class Constants {
     public static final int ANGLE_MOTOR_PORT = 5;
     public static final int Intake_MOTOR_PORT = 6;
 
+    public static final double kcorlorSensorLGateValue = 200;
+
     public static final double kAngleMotorRatio = 0.0;
 
-    public static final double kAngleUpLimit = 0;
-    public static final double kAngleDownLimit = 0;
+    public static final double kAngleUpLimit = 0.942;
+    public static final double kAngleDownLimit = 0.830;
 
     //  Angle PID
     public static final double AnglekP = 0.0;
@@ -71,8 +73,8 @@ public final class Constants {
     public static final double AnglekMinOutput = -1;
 
     public enum AngleAction {
-      kUP(0),
-      kDown(0),
+      kUP(0.2),
+      kDown(-0.2),
       kStop(0);
 
       public final double rate;
@@ -94,8 +96,9 @@ public final class Constants {
     }
 
     public enum IntakeAction {
-      kGet(0.7),
-      kRev(-0.5),
+      kGet(0.3),
+      kShoote(0.9),
+      kRev(-0.3),
       kStop(0);
 
       public final double rate;
@@ -110,19 +113,24 @@ public final class Constants {
 
   // Shooter
   public static final class ShooterConstants {
-    public static final int SHOOTER_LEFT_MOTOR_PORT = 1;
-    public static final int SHOOTER_RIGHT_MOTOR_PORT = 2;
+    public static final int SHOOTER_LEFT_MOTOR_PORT = 7;
+    public static final int SHOOTER_RIGHT_MOTOR_PORT = 8;
 
-    public enum ShooterAction {
-      kShoote(1.0),
-      kStop(0);
+    public static final double kLShoote = 0.7;
+    public static final double kRShoote = 1.0;
+    public static final double kStop = 0.0;
 
-      public final double rate;
+    // public enum ShooterAction {
+    //   kLShoote(0.7),
+    //   kRShoote(1),
+    //   kStop(0);
 
-      private ShooterAction(double rate){
-        this.rate = rate;
-      }
-    }
+    //   public final double rate;
+
+    //   private ShooterAction(double rate){
+    //     this.rate = rate;
+    //   }
+    // }
   }
 
   public static final class LEDConstants {
