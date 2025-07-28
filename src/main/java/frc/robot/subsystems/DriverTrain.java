@@ -16,33 +16,52 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
 public class DriverTrain extends SubsystemBase {
-  private final SparkMax FRONT_LEFT_MOTOR; 
-  private final SparkMax FRONT_RIGHT_MOTOR;
-  private final SparkMax BACK_LEFT_MOTOR;
-  private final SparkMax BACK_RIGHT_MOTOR;
+  private  SparkMax FRONT_LEFT_MOTOR = new SparkMax(DriveConstants.FRONT_LEFT_MOTOR_PORT, MotorType.kBrushless); 
+  private  SparkMax FRONT_RIGHT_MOTOR = new SparkMax(DriveConstants.FRONT_RIGHT_MOTOR_PORT, MotorType.kBrushless);
+  private  SparkMax BACK_LEFT_MOTOR = new SparkMax(DriveConstants.BACK_LEFT_MOTOR_PORT, MotorType.kBrushless);
+  private  SparkMax BACK_RIGHT_MOTOR = new SparkMax(DriveConstants.BACK_RIGHT_MOTOR_PORT, MotorType.kBrushless);
 
-  private final DifferentialDrive drive;
+  private SparkMaxConfig FRONT_LEFT_CONFIG = new SparkMaxConfig();
+  private SparkMaxConfig FRONT_RIGHT_CONFIG = new SparkMaxConfig();
+  private SparkMaxConfig BACK_LEFT_CONFIG = new SparkMaxConfig();
+  private SparkMaxConfig BACK_RIGHT_CONFIG = new SparkMaxConfig();
+
+  private  DifferentialDrive drive = new DifferentialDrive(FRONT_LEFT_MOTOR, FRONT_RIGHT_MOTOR);;
+
 
   /** Creates a new DriverTrain. */
   public DriverTrain() {
-    FRONT_LEFT_MOTOR = new SparkMax(DriveConstants.FRONT_LEFT_MOTOR_PORT, MotorType.kBrushless);
-    FRONT_RIGHT_MOTOR = new SparkMax(DriveConstants.FRONT_RIGHT_MOTOR_PORT, MotorType.kBrushless);
-    BACK_LEFT_MOTOR= new SparkMax(DriveConstants.BACK_LEFT_MOTOR_PORT, MotorType.kBrushless);
-    BACK_RIGHT_MOTOR = new SparkMax(DriveConstants.BACK_RIGHT_MOTOR_PORT, MotorType.kBrushless);
 
-    drive = new DifferentialDrive(FRONT_LEFT_MOTOR, FRONT_RIGHT_MOTOR);
+    FRONT_LEFT_CONFIG
+    .inverted(true)
+    .idleMode(IdleMode.kBrake)
+    .smartCurrentLimit(60);
 
-    SparkMaxConfig config = new SparkMaxConfig();
-    config.smartCurrentLimit(60);
+    FRONT_RIGHT_CONFIG
+    .inverted(false)
+    .idleMode(IdleMode.kBrake)
+    .smartCurrentLimit(60);
 
-    config.follow(FRONT_LEFT_MOTOR);
-    BACK_LEFT_MOTOR.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    config.follow(FRONT_RIGHT_MOTOR);
-    BACK_RIGHT_MOTOR.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    BACK_LEFT_CONFIG.follow(FRONT_LEFT_MOTOR);
+    BACK_RIGHT_CONFIG.follow(FRONT_RIGHT_MOTOR);
 
-    config.inverted(true);
-    config.idleMode(IdleMode.kBrake);
-    FRONT_LEFT_MOTOR.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    FRONT_LEFT_MOTOR.configure(FRONT_LEFT_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    FRONT_RIGHT_MOTOR.configure(FRONT_RIGHT_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    BACK_LEFT_MOTOR.configure(BACK_LEFT_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    BACK_RIGHT_MOTOR.configure(BACK_RIGHT_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+    drive.setDeadband(0.05);
+    // SparkMaxConfig config = new SparkMaxConfig();
+    // config.smartCurrentLimit(60);
+
+    // config.follow(FRONT_LEFT_MOTOR);
+    // BACK_LEFT_MOTOR.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    // config.follow(FRONT_RIGHT_MOTOR);
+    // BACK_RIGHT_MOTOR.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+    // config.inverted(true);
+    // config.idleMode(IdleMode.kBrake);
+    // FRONT_LEFT_MOTOR.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
   @Override
@@ -51,6 +70,6 @@ public class DriverTrain extends SubsystemBase {
   }
 
   public void driveArcade(double xSpeed, double zRotation) {
-    drive.arcadeDrive(xSpeed, zRotation);
+    drive.arcadeDrive(DriveConstants.kFedPercent * xSpeed, DriveConstants.kRotPercent * zRotation);
   }
 }

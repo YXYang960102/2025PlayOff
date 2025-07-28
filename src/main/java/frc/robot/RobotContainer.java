@@ -16,10 +16,22 @@ import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-
-import frc.robot.commands.DriveCommand;
+import frc.robot.subsystems.AngleSubsystem;
 import frc.robot.subsystems.DriverTrain;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.IntakeConstants.AngleAction;
+import frc.robot.Constants.IntakeConstants.IntakeAction;
+import frc.robot.Constants.IntakeConstants.IntakeState;
+// import frc.robot.Constants.ShooterConstants.ShooterAction;
+import frc.robot.commands.Drive.DriveCommand;
+import frc.robot.commands.Intake.IntakeAuto;
+import frc.robot.commands.Intake.IntakeNormal;
+import frc.robot.commands.Intake.IntakeStateAuto;
+import frc.robot.commands.Intake.IntakeStateNormal;
+import frc.robot.commands.Shooter.ShooterAuto;
+import frc.robot.commands.Shooter.ShooterNormal;
 
 
 /**
@@ -31,10 +43,15 @@ import frc.robot.Constants.OIConstants;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriverTrain driverTrain = new DriverTrain();
+  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  private final AngleSubsystem angleSubsystem = new AngleSubsystem();
+  private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private static CommandXboxController m_driverController = new CommandXboxController(
       OIConstants.kDriverControllerPort);
+  private static CommandXboxController m_operatorController = new CommandXboxController(
+      OIConstants.kOperatorControllerPort);
 
 
   // Create auto chooser
@@ -60,20 +77,34 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-  
+    // Intake state normal
+    m_driverController.pov(0).whileTrue(new IntakeStateNormal(angleSubsystem, AngleAction.kUP));
+    m_driverController.pov(180).whileTrue(new IntakeStateNormal(angleSubsystem, AngleAction.kDown));
     
+    m_driverController.leftBumper().onTrue(new IntakeStateAuto(angleSubsystem, IntakeState.kDefult));
+    m_driverController.rightBumper().onTrue(new IntakeStateAuto(angleSubsystem, IntakeState.kGetBall));
 
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    
+    // Intake normal
+    m_driverController.x().whileTrue(new IntakeNormal(intakeSubsystem, IntakeAction.kGet));
+    m_driverController.y().whileTrue(new IntakeNormal(intakeSubsystem, IntakeAction.kRev));
+
+    // Intake Auto
+    m_driverController.a().onTrue(new IntakeAuto(intakeSubsystem, IntakeAction.kGet, angleSubsystem));
+
+    // shooter normal
+    m_operatorController.b().toggleOnTrue(new ShooterNormal(shooterSubsystem));
+    // m_operatorController.leftBumper().onTrue(new ShooterNormal(shooterSubsystem));
+
+    // Shooter Auto
+    m_operatorController.a().onTrue(new ShooterAuto(shooterSubsystem, intakeSubsystem));
   }
 
   private void setDefaultCommand() {
     driverTrain.setDefaultCommand(new DriveCommand(
-      () -> -m_driverController.getLeftY() * 
-          (m_driverController.getHID().getRightBumperButton() ? 1 : 0.5), 
-      () -> -m_driverController.getRightX(),
-       driverTrain));
+      driverTrain,
+      () -> m_driverController.getRightTriggerAxis(),
+      () -> m_driverController.getLeftTriggerAxis(),
+      () -> m_driverController.getLeftX()));
   }
 
   /**
