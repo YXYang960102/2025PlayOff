@@ -24,12 +24,12 @@ public class ShooterAuto extends Command {
     this.shooterSubsystem = shooterSubsystem;
     this.intakeSubsystem = intakeSubsystem;
     addRequirements(shooterSubsystem, intakeSubsystem);
-    timer.reset();
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    timer.reset();
     timer.start();
     shooterSubsystem.setShooterAction();
   }

@@ -60,17 +60,17 @@ public final class Constants {
 
     public static final double kAngleMotorRatio = 0.0;
 
-    public static final double kAngleUpLimit = 0.942;
-    public static final double kAngleDownLimit = 0.830;
+    public static final double kAngleUpLimit = 0.660;
+    public static final double kAngleDownLimit = 0.800;
 
     //  Angle PID
-    public static final double AnglekP = 0.0;
+    public static final double AnglekP = 3.0;
     public static final double AnglekI = 0.0;
     public static final double AnglekD = 0.0;
     public static final double AnglekIz = 0;
     public static final double AnglekFF = 0;
-    public static final double AnglekMaxOutput = 1;
-    public static final double AnglekMinOutput = -1;
+    public static final double AnglekMaxOutput = 0.5;
+    public static final double AnglekMinOutput = -0.5;
 
     public enum AngleAction {
       kUP(0.2),
@@ -85,8 +85,8 @@ public final class Constants {
     }
 
     public enum IntakeState {
-      kDefult(0),
-      kGetBall(0);
+      kDefult(0.665),
+      kGetBall(0.795);
 
       public final double position;
 

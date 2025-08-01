@@ -23,10 +23,12 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.IntakeConstants.AngleAction;
 import frc.robot.Constants.IntakeConstants.IntakeAction;
+import frc.robot.Constants.IntakeConstants.IntakeState;
 // import frc.robot.Constants.ShooterConstants.ShooterAction;
 import frc.robot.commands.Drive.DriveCommand;
-import frc.robot.commands.Intake.IntakeAutoGetBall;
+import frc.robot.commands.Intake.IntakeAuto;
 import frc.robot.commands.Intake.IntakeNormal;
+import frc.robot.commands.Intake.IntakeStateAuto;
 import frc.robot.commands.Intake.IntakeStateNormal;
 import frc.robot.commands.Shooter.ShooterAuto;
 import frc.robot.commands.Shooter.ShooterNormal;
@@ -79,19 +81,22 @@ public class RobotContainer {
     m_driverController.pov(0).whileTrue(new IntakeStateNormal(angleSubsystem, AngleAction.kUP));
     m_driverController.pov(180).whileTrue(new IntakeStateNormal(angleSubsystem, AngleAction.kDown));
     
+    m_driverController.leftBumper().onTrue(new IntakeStateAuto(angleSubsystem, IntakeState.kDefult));
+    m_driverController.rightBumper().onTrue(new IntakeStateAuto(angleSubsystem, IntakeState.kGetBall));
+
     // Intake normal
     m_driverController.x().whileTrue(new IntakeNormal(intakeSubsystem, IntakeAction.kGet));
     m_driverController.y().whileTrue(new IntakeNormal(intakeSubsystem, IntakeAction.kRev));
 
     // Intake Auto
-    m_driverController.b().onTrue(new IntakeAutoGetBall(intakeSubsystem, IntakeAction.kGet));
+    m_driverController.a().onTrue(new IntakeAuto(intakeSubsystem, IntakeAction.kGet, angleSubsystem));
 
     // shooter normal
-    m_driverController.rightBumper().onTrue(new ShooterNormal(shooterSubsystem));
-    m_driverController.leftBumper().onTrue(new ShooterNormal(shooterSubsystem));
+    m_operatorController.b().toggleOnTrue(new ShooterNormal(shooterSubsystem));
+    // m_operatorController.leftBumper().onTrue(new ShooterNormal(shooterSubsystem));
 
     // Shooter Auto
-    m_driverController.a().onTrue(new ShooterAuto(shooterSubsystem, intakeSubsystem));
+    m_operatorController.a().onTrue(new ShooterAuto(shooterSubsystem, intakeSubsystem));
   }
 
   private void setDefaultCommand() {

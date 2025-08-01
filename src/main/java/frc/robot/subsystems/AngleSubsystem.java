@@ -31,17 +31,18 @@ public class AngleSubsystem extends SubsystemBase {
   /** Creates a new AngleSubsystem. */
   public AngleSubsystem() {
     AngleEncoder.setPosition(AngleAbsEncoder.getPosition());
+    // System.out.println(AngleEncoder.getPosition());
 
     AngleConfig
     .inverted(true)
     .idleMode(IdleMode.kBrake)
     .closedLoop
     .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
-    .pid(0, 0, 0)
-    .iZone(0)
-    .velocityFF(0)
-    .maxOutput(0)
-    .minOutput(0);
+    .pid(IntakeConstants.AnglekP, IntakeConstants.AnglekI, IntakeConstants.AnglekD)
+    .iZone(IntakeConstants.AnglekIz)
+    .velocityFF(IntakeConstants.AnglekFF)
+    .maxOutput(IntakeConstants.AnglekMaxOutput)
+    .minOutput(IntakeConstants.AnglekMinOutput);
 
     AngleConfig.softLimit
     .forwardSoftLimitEnabled(true)

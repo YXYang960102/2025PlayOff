@@ -7,30 +7,34 @@ package frc.robot.commands.Intake;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.IntakeConstants.IntakeAction;
+import frc.robot.Constants.IntakeConstants.IntakeState;
+import frc.robot.subsystems.AngleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class IntakeAutoGetBall extends Command {
+public class IntakeAuto extends Command {
   private IntakeSubsystem intakeSubsystem;
   private IntakeAction intakeAction;
+  private AngleSubsystem angleSubsystem;
   private Timer timer = new Timer();
   private boolean ballDetected = false;
-  /** Creates a new IntakeAutoGetBall. */
-  public IntakeAutoGetBall(
+  /** Creates a new IntakeAuto. */
+  public IntakeAuto(
     IntakeSubsystem intakeSubsystem,
-    IntakeAction intakeAction
+    IntakeAction intakeAction,
+    AngleSubsystem angleSubsystem
   ) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.intakeSubsystem = intakeSubsystem;
     this.intakeAction = intakeAction;
-    addRequirements(intakeSubsystem);
-    
+    this.angleSubsystem = angleSubsystem;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     intakeSubsystem.setIntakeAction(intakeAction);
+    angleSubsystem.setState(IntakeState.kGetBall);
     timer.reset();
     timer.stop();
     ballDetected = false;
@@ -45,7 +49,7 @@ public class IntakeAutoGetBall extends Command {
       timer.start();
     }
 
-    if (ballDetected && timer.hasElapsed(0.05)) {
+    if (ballDetected && timer.hasElapsed(0.1)) {
       intakeSubsystem.setIntakeAction(IntakeAction.kStop);
     }
   }
@@ -54,12 +58,13 @@ public class IntakeAutoGetBall extends Command {
   @Override
   public void end(boolean interrupted) {
     intakeSubsystem.setIntakeAction(IntakeAction.kStop);
+    angleSubsystem.setState(IntakeState.kDefult);
     timer.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return ballDetected && timer.hasElapsed(0.05);
+    return ballDetected && timer.hasElapsed(0.1);
   }
 }
