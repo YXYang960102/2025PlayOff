@@ -32,14 +32,15 @@ public class ShooterAuto extends Command {
     timer.reset();
     timer.start();
     shooterSubsystem.setShooterAction();
+    intakeSubsystem.setIntakeAction(IntakeAction.kShoote);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (timer.hasElapsed(1.0)) { // pass 1 sencond
-      intakeSubsystem.setIntakeAction(IntakeAction.kShoote); // start intake
-    }
+    // if (timer.hasElapsed(1.0)) { // pass 1 sencond
+    //   intakeSubsystem.setIntakeAction(IntakeAction.kShoote); // start intake
+    // }
   }
 
   // Called once the command ends or is interrupted.
@@ -53,6 +54,6 @@ public class ShooterAuto extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return timer.hasElapsed(3.0);
+    return timer.hasElapsed(2.0);
   }
 }
