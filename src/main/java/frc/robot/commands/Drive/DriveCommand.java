@@ -11,20 +11,20 @@ import frc.robot.subsystems.DriverTrain;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class DriveCommand extends Command {
-  private final DoubleSupplier xSpeed;
-  private final DoubleSupplier zRotation;
-  private final DriverTrain driveSubsystem;
+  private  DoubleSupplier xSpeed;
+  private  DoubleSupplier zRotation;
+  private  DriverTrain driveSubsystem;
   /** Creates a new DriveCommand. */
   public DriveCommand(
+    DriverTrain driveSubsystem,
     DoubleSupplier xSpeed,
-    DoubleSupplier zRotation,
-    DriverTrain driveSubsystem) {
+    DoubleSupplier zRotation) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.xSpeed = xSpeed;
     this.zRotation = zRotation;
     this.driveSubsystem = driveSubsystem;
 
-    addRequirements(this.driveSubsystem);
+    addRequirements(driveSubsystem);
   }
 
   // Called when the command is initially scheduled.

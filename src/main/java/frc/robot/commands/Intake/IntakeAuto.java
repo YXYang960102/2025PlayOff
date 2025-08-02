@@ -49,7 +49,7 @@ public class IntakeAuto extends Command {
       timer.start();
     }
 
-    if (ballDetected && timer.hasElapsed(0.1)) {
+    if (ballDetected && timer.hasElapsed(0.05)) {
       intakeSubsystem.setIntakeAction(IntakeAction.kStop);
     }
   }
@@ -65,6 +65,6 @@ public class IntakeAuto extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return ballDetected && timer.hasElapsed(0.1);
+    return ballDetected && timer.hasElapsed(0.05);
   }
 }

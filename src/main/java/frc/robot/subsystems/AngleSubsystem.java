@@ -31,7 +31,14 @@ public class AngleSubsystem extends SubsystemBase {
   /** Creates a new AngleSubsystem. */
   public AngleSubsystem() {
     AngleEncoder.setPosition(AngleAbsEncoder.getPosition());
+    
     // System.out.println(AngleEncoder.getPosition());
+
+    AngleConfig.softLimit
+    .forwardSoftLimitEnabled(true)
+    .reverseSoftLimitEnabled(true)
+    .forwardSoftLimit(IntakeConstants.kAngleUpLimit)
+    .reverseSoftLimit(IntakeConstants.kAngleDownLimit);
 
     AngleConfig
     .inverted(true)
@@ -44,11 +51,6 @@ public class AngleSubsystem extends SubsystemBase {
     .maxOutput(IntakeConstants.AnglekMaxOutput)
     .minOutput(IntakeConstants.AnglekMinOutput);
 
-    AngleConfig.softLimit
-    .forwardSoftLimitEnabled(true)
-    .reverseSoftLimitEnabled(true)
-    .forwardSoftLimit(IntakeConstants.kAngleUpLimit)
-    .reverseSoftLimit(IntakeConstants.kAngleDownLimit);
 
     Angle_MOTOR.configure(AngleConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
