@@ -30,9 +30,8 @@ public class AngleSubsystem extends SubsystemBase {
   private SparkClosedLoopController AnglePIDController = Angle_MOTOR.getClosedLoopController();
   /** Creates a new AngleSubsystem. */
   public AngleSubsystem() {
-    AngleEncoder.setPosition(AngleAbsEncoder.getPosition());
     
-    // System.out.println(AngleEncoder.getPosition());
+    AngleEncoder.setPosition(AngleAbsEncoder.getPosition());
 
     AngleConfig.softLimit
     .forwardSoftLimitEnabled(true)
@@ -51,8 +50,8 @@ public class AngleSubsystem extends SubsystemBase {
     .maxOutput(IntakeConstants.AnglekMaxOutput)
     .minOutput(IntakeConstants.AnglekMinOutput);
 
-
-    Angle_MOTOR.configure(AngleConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    Angle_MOTOR.configure(AngleConfig, ResetMode.kResetSafeParameters,
+     PersistMode.kPersistParameters);
 
   }
 

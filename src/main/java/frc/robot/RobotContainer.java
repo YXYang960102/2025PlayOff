@@ -102,9 +102,9 @@ public class RobotContainer {
   private void setDefaultCommand() {
     driverTrain.setDefaultCommand(new DriveCommand(
       driverTrain,
-      () -> m_driverController.getLeftY() * 
-          0.5, 
-      () -> m_driverController.getRightX() * 0.5));
+      () -> m_driverController.getRightTriggerAxis(),
+      () -> m_driverController.getLeftTriggerAxis(),
+      () -> m_driverController.getLeftX()));
   }
 
   /**

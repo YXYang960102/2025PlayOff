@@ -49,6 +49,9 @@ public final class Constants {
     public static final int FRONT_RIGHT_MOTOR_PORT = 2;
     public static final int BACK_LEFT_MOTOR_PORT = 3;
     public static final int BACK_RIGHT_MOTOR_PORT = 4;
+
+    public static final double kFedPercent = 1.0;
+    public static final double kRotPercent = 0.6;
   }
 
   // Intake
@@ -58,7 +61,7 @@ public final class Constants {
 
     public static final double kcorlorSensorLGateValue = 200;
 
-    public static final double kAngleMotorRatio = 0.0;
+    public static final double kAngleMotorRatio = 80.0 * (42.0 / 22.0);
 
     public static final double kAngleUpLimit = 0.740;
     public static final double kAngleDownLimit = 0.573;

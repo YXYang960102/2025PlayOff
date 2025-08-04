@@ -70,6 +70,6 @@ public class DriverTrain extends SubsystemBase {
   }
 
   public void driveArcade(double xSpeed, double zRotation) {
-    drive.arcadeDrive(xSpeed, zRotation);
+    drive.arcadeDrive(DriveConstants.kFedPercent * xSpeed, DriveConstants.kRotPercent * zRotation);
   }
 }

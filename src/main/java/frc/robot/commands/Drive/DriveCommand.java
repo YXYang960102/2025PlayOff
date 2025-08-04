@@ -11,16 +11,17 @@ import frc.robot.subsystems.DriverTrain;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class DriveCommand extends Command {
-  private  DoubleSupplier xSpeed;
-  private  DoubleSupplier zRotation;
+  private  DoubleSupplier rightTrig, leftTrig, zRotation;
   private  DriverTrain driveSubsystem;
   /** Creates a new DriveCommand. */
   public DriveCommand(
     DriverTrain driveSubsystem,
-    DoubleSupplier xSpeed,
+    DoubleSupplier rightTrig,
+    DoubleSupplier leftTrig,
     DoubleSupplier zRotation) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.xSpeed = xSpeed;
+    this.rightTrig = rightTrig;
+    this.leftTrig = leftTrig;
     this.zRotation = zRotation;
     this.driveSubsystem = driveSubsystem;
 
@@ -34,12 +35,15 @@ public class DriveCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    driveSubsystem.driveArcade(xSpeed.getAsDouble(), zRotation.getAsDouble());
+    final double fewRate = rightTrig.getAsDouble() - leftTrig.getAsDouble();
+    driveSubsystem.driveArcade(fewRate, zRotation.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    driveSubsystem.driveArcade(0, 0);
+  }
 
   // Returns true when the command should end.
   @Override
