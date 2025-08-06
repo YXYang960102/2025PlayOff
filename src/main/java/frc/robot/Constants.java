@@ -50,8 +50,8 @@ public final class Constants {
     public static final int BACK_LEFT_MOTOR_PORT = 3;
     public static final int BACK_RIGHT_MOTOR_PORT = 4;
 
-    public static final double kFedPercent = 1.0;
-    public static final double kRotPercent = 0.6;
+    public static final double kFedPercent = 0.7;
+    public static final double kRotPercent = 0.5;
   }
 
   // Intake
@@ -64,7 +64,7 @@ public final class Constants {
     public static final double kAngleMotorRatio = 80.0 * (42.0 / 22.0);
 
     public static final double kAngleUpLimit = 0.740;
-    public static final double kAngleDownLimit = 0.573;
+    public static final double kAngleDownLimit = 0.588;
 
     //  Angle PID
     public static final double AnglekP = 3.0;
@@ -89,7 +89,7 @@ public final class Constants {
 
     public enum IntakeState {
       kDefult(0.735),
-      kGetBall(0.572);
+      kGetBall(0.589);
 
       public final double position;
 
@@ -99,9 +99,9 @@ public final class Constants {
     }
 
     public enum IntakeAction {
-      kGet(0.3),
+      kGet(0.4),
       kShoote(0.4),
-      kRev(-0.3),
+      kRev(-0.5),
       kStop(0);
 
       public final double rate;
@@ -121,6 +121,7 @@ public final class Constants {
 
     public static final double kLShoote = 0.7;
     public static final double kRShoote = 1.0;
+    public static final double kRev = -0.4;
     public static final double kStop = 0.0;
 
     // public enum ShooterAction {

@@ -50,7 +50,7 @@ public class AngleSubsystem extends SubsystemBase {
     .maxOutput(IntakeConstants.AnglekMaxOutput)
     .minOutput(IntakeConstants.AnglekMinOutput);
 
-    Angle_MOTOR.configure(AngleConfig, ResetMode.kResetSafeParameters,
+    Angle_MOTOR.configure(AngleConfig, ResetMode.kNoResetSafeParameters,
      PersistMode.kPersistParameters);
 
   }

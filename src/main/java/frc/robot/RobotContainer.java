@@ -30,6 +30,7 @@ import frc.robot.commands.Intake.IntakeAuto;
 import frc.robot.commands.Intake.IntakeNormal;
 import frc.robot.commands.Intake.IntakeStateAuto;
 import frc.robot.commands.Intake.IntakeStateNormal;
+import frc.robot.commands.Shooter.ShooteProccesor;
 import frc.robot.commands.Shooter.ShooterAuto;
 import frc.robot.commands.Shooter.ShooterNormal;
 
@@ -97,6 +98,9 @@ public class RobotContainer {
 
     // Shooter Auto
     m_operatorController.a().onTrue(new ShooterAuto(shooterSubsystem, intakeSubsystem));
+
+    //shoote Proccesor
+    m_operatorController.y().onTrue(new ShooteProccesor(shooterSubsystem, intakeSubsystem));
   }
 
   private void setDefaultCommand() {
