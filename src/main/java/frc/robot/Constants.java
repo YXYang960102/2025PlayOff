@@ -52,6 +52,10 @@ public final class Constants {
 
     public static final double kFedPercent = 0.7;
     public static final double kRotPercent = 0.5;
+
+    public static final double kWheelDiameterMeters = Units.inchesToMeters(6);
+    public static final double kWheelWidth = 0.555;
+    public static final double kGearBox = 1.0 / 8.46;
   }
 
   // Intake
@@ -101,7 +105,7 @@ public final class Constants {
     public enum IntakeAction {
       kGet(0.4),
       kShoote(0.4),
-      kRev(-0.5),
+      kRev(-0.3),
       kStop(0);
 
       public final double rate;

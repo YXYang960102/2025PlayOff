@@ -63,7 +63,6 @@ public class DriverTrain extends SubsystemBase {
       }
     }).start();
 
-    // Motor configs (包含 encoder conversion 在 config 裡)
     FRONT_LEFT_CONFIG
         .inverted(true)
         .idleMode(IdleMode.kBrake)
@@ -96,8 +95,6 @@ public class DriverTrain extends SubsystemBase {
   @Override
   public void periodic() {
   }
-
-  
 
   /* ---------- Drive methods ---------- */
   public void driveArcade(double xSpeed, double zRotation) {
