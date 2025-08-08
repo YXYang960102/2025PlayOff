@@ -94,25 +94,27 @@ public class DriverTrain extends SubsystemBase {
     SmartDashboard.putData("Field", field);
 
     
-    // try {
-    //   config = RobotConfig.fromGUISettings();
-    // } catch (Exception e) {
-    //   e.printStackTrace();
-    // }
+     try {
+      config = RobotConfig.fromGUISettings();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
-    // AutoBuilder.configure(
-    //     this::getPose, 
-    //     this::resetOdometry, 
-    //     this::getRobotRelativeSpeeds, 
-    //     this::driveRobotRelative, 
-    //     new PPLTVController(0.02), 
-    //     config, 
-    //     () -> {
-    //       var alliance = DriverStation.getAlliance();
-    //       return alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red;
-    //     },
-    //     this 
-    // );
+    AutoBuilder.configure(
+        this::getPose, 
+        this::resetOdometry, 
+        this::getRobotRelativeSpeeds, 
+        this::driveRobotRelative, 
+        new PPLTVController(0.01), 
+        config, 
+        () -> {
+          var alliance = DriverStation.getAlliance();
+          return alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red;
+        },
+        this 
+    );
+
+    PathPlannerLogging.setLogActivePathCallback((poses) -> field.getObject("path").setPoses(poses));
   }
 
   @Override
@@ -121,6 +123,7 @@ public class DriverTrain extends SubsystemBase {
     SmartDashboard.putNumber("Robot X", odometry.getPoseMeters().getX());
     SmartDashboard.putNumber("Robot Y", odometry.getPoseMeters().getY());
     SmartDashboard.putNumber("Robot Rotation", odometry.getPoseMeters().getRotation().getDegrees());
+    SmartDashboard.putNumber("NavX heading", getHeading());
 
     field.setRobotPose(odometry.getPoseMeters());
   }
@@ -151,7 +154,7 @@ public class DriverTrain extends SubsystemBase {
   }
 
   public Rotation2d getOdometryAngle() {
-    double angle = -getHeading();
+    double angle = getHeading();
     return Rotation2d.fromDegrees(angle);
   }
 

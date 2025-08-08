@@ -55,8 +55,8 @@ public class RobotContainer {
       OIConstants.kOperatorControllerPort);
 
 
-  // // Create auto chooser
-  // private final SendableChooser<Command> autoChooser;
+  // Create auto chooser
+  private final SendableChooser<Command> autoChooser;
 
   
 
@@ -64,8 +64,8 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     // configureNamedCommands();
-    // autoChooser = AutoBuilder.buildAutoChooser(); // Default auto will be `Commands.none()`
-    // SmartDashboard.putData("Auto Mode", autoChooser);
+    autoChooser = AutoBuilder.buildAutoChooser(); // Default auto will be `Commands.none()`
+    SmartDashboard.putData("Auto Mode", autoChooser);
     configureBindings();
     setDefaultCommand();
   }
@@ -120,6 +120,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return null;
+    return autoChooser.getSelected();
   }
 }
