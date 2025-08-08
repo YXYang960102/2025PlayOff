@@ -56,6 +56,7 @@ public final class Constants {
     public static final double kWheelDiameterMeters = Units.inchesToMeters(6);
     public static final double kWheelWidth = 0.555;
     public static final double kGearBox = 1.0 / 8.46;
+    public static final double kMaxSpeed = 3.0; // 3 m/s
   }
 
   // Intake

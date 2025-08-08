@@ -30,12 +30,7 @@ import frc.robot.Constants.IntakeConstants.IntakeAction;
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new Intake. */
   private SparkMax Intake_MOTOR = new SparkMax(IntakeConstants.Intake_MOTOR_PORT, MotorType.kBrushless);
-  // private SparkMax Angle_MOTOR = new SparkMax(IntakeConstants.ANGLE_MOTOR_PORT, MotorType.kBrushless);
   private SparkMaxConfig IntakeConfig = new SparkMaxConfig();
-  // private SparkMaxConfig AngleConfig = new SparkMaxConfig();
-  // private RelativeEncoder AngleEncoder =  Angle_MOTOR.getEncoder();
-  // private SparkAbsoluteEncoder AngleAbsEncoder = Angle_MOTOR.getAbsoluteEncoder();
-  // private SparkClosedLoopController AnglePIDController = Angle_MOTOR.getClosedLoopController();
 
   private I2C.Port i2cPort = I2C.Port.kOnboard;
   private ColorSensorV3 colorSensorV3  =new ColorSensorV3(i2cPort);
@@ -48,53 +43,14 @@ public class IntakeSubsystem extends SubsystemBase {
     .inverted(true)
     .idleMode(IdleMode.kBrake)
     .smartCurrentLimit(70);
-
-    // AngleConfig.softLimit
-    // .forwardSoftLimitEnabled(false)
-    // .reverseSoftLimitEnabled(false)
-    // .forwardSoftLimit(0)
-    // .reverseSoftLimit(0);
-
-    // AngleConfig
-    // .inverted(false)
-    // .idleMode(IdleMode.kBrake)
-    // .closedLoop
-    // .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
-    // .pid(0, 0, 0)
-    // .iZone(0)
-    // .velocityFF(0)
-    // .maxOutput(0)
-    // .minOutput(0);
     
-
     Intake_MOTOR.configure(IntakeConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    // Angle_MOTOR.configure(AngleConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-
+    
   }
-
-  // public double getAnglePosition() {
-  //   return AngleEncoder.getPosition();
-  // }
-
-  // public double getAbsPosition() {
-  //   return AngleAbsEncoder.getPosition();
-  // }
 
   public void setIntakeAction(IntakeAction action) {
    Intake_MOTOR.set(action.rate);
   }
-
-  // public void setAngleAction(AngleAction action) {
-  //   Angle_MOTOR.set(action.rate);
-  // }
-
-  // public void setState(IntakeState state) {
-  //   AnglePIDController.setReference(state.position, ControlType.kPosition);
-  // }
-
-  // public void setAngleHold() {
-  //   AnglePIDController.setReference(getAbsPosition(), ControlType.kPosition);
-  // }
 
   public double getIR() {
   /**
@@ -128,7 +84,5 @@ public class IntakeSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putBoolean("isGet", getBall());
-    // SmartDashboard.putNumber("Angle Position", getAnglePosition());
-    // SmartDashboard.putNumber("Angle Abs Position", getAbsPosition());
   }
 }

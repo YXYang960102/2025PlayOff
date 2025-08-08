@@ -44,13 +44,15 @@ public class DriverTrain extends SubsystemBase {
 
   private final static AHRS gyro = new AHRS(NavXComType.kMXP_SPI);
 
+  private RobotConfig config;
   private final Field2d field = new Field2d();
-  private RobotConfig robotConfig;
-  private boolean isRED = false;
   public static double heading;
 
   private final RelativeEncoder leftEncoder = FRONT_LEFT_MOTOR.getEncoder();
   private final RelativeEncoder rightEncoder = FRONT_RIGHT_MOTOR.getEncoder();
+
+  private final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(DriveConstants.kWheelWidth);
+  private DifferentialDriveOdometry odometry;
 
   public DriverTrain() {
     // wait a bit then zero gyro to let navX initialize safely
@@ -83,17 +85,44 @@ public class DriverTrain extends SubsystemBase {
 
     drive.setDeadband(0.05);
 
+    odometry = new DifferentialDriveOdometry(
+        getOdometryAngle(),
+        getLeftDistanceMeters(),
+        getRightDistanceMeters(),
+        Pose2d.kZero);
 
-   
-    
     SmartDashboard.putData("Field", field);
 
-   
-    // resetOdometry(new Pose2d());
+    
+    // try {
+    //   config = RobotConfig.fromGUISettings();
+    // } catch (Exception e) {
+    //   e.printStackTrace();
+    // }
+
+    // AutoBuilder.configure(
+    //     this::getPose, 
+    //     this::resetOdometry, 
+    //     this::getRobotRelativeSpeeds, 
+    //     this::driveRobotRelative, 
+    //     new PPLTVController(0.02), 
+    //     config, 
+    //     () -> {
+    //       var alliance = DriverStation.getAlliance();
+    //       return alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red;
+    //     },
+    //     this 
+    // );
   }
 
   @Override
   public void periodic() {
+    odometry.update(getOdometryAngle(), getLeftDistanceMeters(), getRightDistanceMeters());
+    SmartDashboard.putNumber("Robot X", odometry.getPoseMeters().getX());
+    SmartDashboard.putNumber("Robot Y", odometry.getPoseMeters().getY());
+    SmartDashboard.putNumber("Robot Rotation", odometry.getPoseMeters().getRotation().getDegrees());
+
+    field.setRobotPose(odometry.getPoseMeters());
   }
 
   /* ---------- Drive methods ---------- */
@@ -101,7 +130,13 @@ public class DriverTrain extends SubsystemBase {
     drive.arcadeDrive(DriveConstants.kFedPercent * xSpeed, DriveConstants.kRotPercent * zRotation);
   }
 
-  
+  public void tankDriveVolts(double leftVolts, double rightVolts) {
+    FRONT_LEFT_MOTOR.setVoltage(leftVolts);
+    BACK_LEFT_MOTOR.setVoltage(leftVolts);
+    FRONT_RIGHT_MOTOR.setVoltage(rightVolts);
+    BACK_RIGHT_MOTOR.setVoltage(rightVolts);
+    drive.feed();
+  }
 
   /* ---------- Gyro / Odometry helpers ---------- */
   // Reset gyro heading
@@ -116,19 +151,50 @@ public class DriverTrain extends SubsystemBase {
   }
 
   public Rotation2d getOdometryAngle() {
-    return Rotation2d.fromDegrees(getRobotDegrees() - 180.0);
+    double angle = -getHeading();
+    return Rotation2d.fromDegrees(angle);
   }
 
-  public double getRobotDegrees() {
-    double rawValue = -gyro.getAngle() % 360.0;
-    if (rawValue < 0.0) {
-      return (rawValue + 360.0);
-    } else {
-      return (rawValue);
-    }
+  public double getLeftDistanceMeters() {
+    return leftEncoder.getPosition() * DriveConstants.kWheelDiameterMeters * Math.PI * DriveConstants.kGearBox;
   }
 
+  public double getRightDistanceMeters() {
+    return rightEncoder.getPosition() * DriveConstants.kWheelDiameterMeters * Math.PI * DriveConstants.kGearBox;
+  }
+
+  public Pose2d getPose() {
+    return odometry.getPoseMeters();
+  }
+
+  public void resetOdometry(Pose2d pose) {
+    odometry.resetPosition(getOdometryAngle(), getLeftDistanceMeters(), getRightDistanceMeters(), pose);
+  }
+
+  public ChassisSpeeds getRobotRelativeSpeeds() {
+    double leftVelocity = leftEncoder.getVelocity() * DriveConstants.kWheelDiameterMeters * Math.PI * DriveConstants.kGearBox / 60.0;
+    double rightVelocity = rightEncoder.getVelocity() * DriveConstants.kWheelDiameterMeters * Math.PI * DriveConstants.kGearBox / 60.0;
   
+    DifferentialDriveWheelSpeeds wheelSpeeds = new DifferentialDriveWheelSpeeds(leftVelocity, rightVelocity);
+    return kinematics.toChassisSpeeds(wheelSpeeds);
+  }
 
-   
+  public void driveRobotRelative(ChassisSpeeds speeds) {
+    DifferentialDriveWheelSpeeds wheelSpeeds = kinematics.toWheelSpeeds(speeds);
+  
+    double leftVolts = wheelSpeeds.leftMetersPerSecond * 12.0 / DriveConstants.kMaxSpeed;
+    double rightVolts = wheelSpeeds.rightMetersPerSecond * 12.0 / DriveConstants.kMaxSpeed;
+  
+    tankDriveVolts(leftVolts, rightVolts);
+  }
+
+  // public double getRobotDegrees() {
+  // double rawValue = -gyro.getAngle() % 360.0;
+  // if (rawValue < 0.0) {
+  // return (rawValue + 360.0);
+  // } else {
+  // return (rawValue);
+  // }
+  // }
+
 }
