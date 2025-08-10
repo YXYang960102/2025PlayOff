@@ -7,6 +7,7 @@ package frc.robot;
 
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -24,6 +25,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.IntakeConstants.AngleAction;
 import frc.robot.Constants.IntakeConstants.IntakeAction;
 import frc.robot.Constants.IntakeConstants.IntakeState;
+import frc.robot.commands.Auto.AutoIntakeL1;
 // import frc.robot.Constants.ShooterConstants.ShooterAction;
 import frc.robot.commands.Drive.DriveCommand;
 import frc.robot.commands.Intake.IntakeAuto;
@@ -63,7 +65,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
-    // configureNamedCommands();
+    configureNamedCommands();
     autoChooser = AutoBuilder.buildAutoChooser(); // Default auto will be `Commands.none()`
     SmartDashboard.putData("Auto Mode", autoChooser);
     configureBindings();
@@ -103,6 +105,10 @@ public class RobotContainer {
 
     //shoote Proccesor
     m_operatorController.y().onTrue(new ShooteProccesor(shooterSubsystem, intakeSubsystem));
+  }
+
+  private void configureNamedCommands() {
+    NamedCommands.registerCommand("IntakeL1", new AutoIntakeL1(intakeSubsystem));
   }
 
   private void setDefaultCommand() {

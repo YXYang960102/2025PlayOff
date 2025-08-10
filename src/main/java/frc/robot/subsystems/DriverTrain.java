@@ -105,7 +105,7 @@ public class DriverTrain extends SubsystemBase {
         this::resetOdometry, 
         this::getRobotRelativeSpeeds, 
         this::driveRobotRelative, 
-        new PPLTVController(0.01), 
+        new PPLTVController(0.02), 
         config, 
         () -> {
           var alliance = DriverStation.getAlliance();
