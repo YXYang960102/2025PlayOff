@@ -25,6 +25,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.IntakeConstants.AngleAction;
 import frc.robot.Constants.IntakeConstants.IntakeAction;
 import frc.robot.Constants.IntakeConstants.IntakeState;
+import frc.robot.commands.Auto.AutoIntakeGetBall;
 import frc.robot.commands.Auto.AutoIntakeL1;
 // import frc.robot.Constants.ShooterConstants.ShooterAction;
 import frc.robot.commands.Drive.DriveCommand;
@@ -109,6 +110,7 @@ public class RobotContainer {
 
   private void configureNamedCommands() {
     NamedCommands.registerCommand("IntakeL1", new AutoIntakeL1(intakeSubsystem));
+    NamedCommands.registerCommand("AutoGetBall", new AutoIntakeGetBall(intakeSubsystem, IntakeAction.kGet));
   }
 
   private void setDefaultCommand() {

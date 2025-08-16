@@ -23,9 +23,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "to get ball"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "to get ball"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoGetBall"
+                }
+              }
+            ]
           }
         }
       ]

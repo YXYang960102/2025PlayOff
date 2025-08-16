@@ -154,7 +154,7 @@ public class DriverTrain extends SubsystemBase {
   }
 
   public Rotation2d getOdometryAngle() {
-    double angle = getHeading();
+    double angle = getHeading() + 180;
     return Rotation2d.fromDegrees(angle);
   }
 
