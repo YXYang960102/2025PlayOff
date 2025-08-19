@@ -30,6 +30,7 @@ import frc.robot.commands.Auto.AutoIntakeGetBall;
 import frc.robot.commands.Auto.AutoIntakeL1;
 // import frc.robot.Constants.ShooterConstants.ShooterAction;
 import frc.robot.commands.Drive.DriveCommand;
+import frc.robot.commands.Intake.IntakeAllDefault;
 import frc.robot.commands.Intake.IntakeAuto;
 import frc.robot.commands.Intake.IntakeNormal;
 import frc.robot.commands.Intake.IntakeStateAuto;
@@ -37,6 +38,7 @@ import frc.robot.commands.Intake.IntakeStateNormal;
 import frc.robot.commands.Shooter.ShooteProccesor;
 import frc.robot.commands.Shooter.ShooterAuto;
 import frc.robot.commands.Shooter.ShooterNormal;
+import frc.robot.commands.Shooter.ShooterRobotBreaker;
 
 
 /**
@@ -99,8 +101,11 @@ public class RobotContainer {
     // Intake Auto
     m_driverController.a().onTrue(new IntakeAuto(intakeSubsystem, IntakeAction.kGet, angleSubsystem, led));
 
-    // shooter normal
-    
+    // Intake & Shooter All Default
+    m_driverController.b().onTrue(new IntakeAllDefault(intakeSubsystem, angleSubsystem, shooterSubsystem, led));
+
+    // shooter breaker
+    m_operatorController.b().onTrue(new ShooterRobotBreaker(shooterSubsystem, intakeSubsystem, led));
 
     // Shooter Auto
     m_operatorController.y().onTrue(new ShooterAuto(shooterSubsystem, intakeSubsystem, led));

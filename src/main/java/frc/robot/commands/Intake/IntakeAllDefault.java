@@ -23,13 +23,14 @@ public class IntakeAllDefault extends InstantCommand {
   public IntakeAllDefault(
     IntakeSubsystem intakeSubsystem,
     AngleSubsystem angleSubsystem,
-    ShooterSubsystem shooterSubsystem
+    ShooterSubsystem shooterSubsystem,
+    LED led
   ) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.intakeSubsystem = intakeSubsystem;
     this.angleSubsystem = angleSubsystem;
     this.shooterSubsystem = shooterSubsystem;
-    
+    this.led = led;
   }
 
   // Called when the command is initially scheduled.
@@ -38,5 +39,6 @@ public class IntakeAllDefault extends InstantCommand {
     intakeSubsystem.setIntakeAction(IntakeAction.kStop);
     angleSubsystem.setState(IntakeState.kDefult);
     shooterSubsystem.StopMotor();
+    led.setIntakeActive(false);
   }
 }

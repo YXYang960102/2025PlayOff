@@ -59,7 +59,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void setShooterRobotBreaker() {
-    SHOOTER_LEFT_MOTOR.set(1.0);
+    SHOOTER_LEFT_MOTOR.set(0.8);
     SHOOTER_RIGHT_MOTOR.set(1.0);
   }
 

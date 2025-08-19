@@ -105,8 +105,9 @@ public final class Constants {
     }
 
     public enum IntakeAction {
-      kGet(0.4),
-      kShoote(0.4),
+      kGet(0.5),
+      kShoote(0.6),
+      kBreaker(0.8),
       kRev(-0.3),
       kStop(0);
 

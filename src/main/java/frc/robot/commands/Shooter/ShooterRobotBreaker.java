@@ -37,7 +37,7 @@ public class ShooterRobotBreaker extends Command {
     timer.start();
     led.setShooterBreaker(true);
     shooterSubsystem.setShooterRobotBreaker();;
-    intakeSubsystem.setIntakeAction(IntakeAction.kShoote);
+    intakeSubsystem.setIntakeAction(IntakeAction.kBreaker);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
