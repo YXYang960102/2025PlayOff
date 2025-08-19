@@ -8,22 +8,26 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.IntakeConstants.IntakeAction;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LED;
 import frc.robot.subsystems.ShooterSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class ShooteProccesor extends Command {
   private ShooterSubsystem shooterSubsystem;
   private IntakeSubsystem intakeSubsystem;
+  private LED led;
   private Timer timer = new Timer();
   /** Creates a new ShooteProccesor. */
   public ShooteProccesor(
     ShooterSubsystem shooterSubsystem,
-    IntakeSubsystem intakeSubsystem
+    IntakeSubsystem intakeSubsystem,
+    LED led
   ) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.shooterSubsystem = shooterSubsystem;
     this.intakeSubsystem = intakeSubsystem;
-    addRequirements(shooterSubsystem, intakeSubsystem);
+    this.led = led;
+    addRequirements(shooterSubsystem, intakeSubsystem, led);
   }
 
   // Called when the command is initially scheduled.
@@ -33,6 +37,7 @@ public class ShooteProccesor extends Command {
     timer.start();
     shooterSubsystem.setShooterRev();
     intakeSubsystem.setIntakeAction(IntakeAction.kRev);
+    led.setShooterReverseActive(true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -44,6 +49,7 @@ public class ShooteProccesor extends Command {
   public void end(boolean interrupted) {
     shooterSubsystem.StopMotor();
     intakeSubsystem.setIntakeAction(IntakeAction.kStop);
+    led.setShooterReverseActive(false);
     timer.stop();
   }
 

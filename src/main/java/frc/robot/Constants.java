@@ -10,6 +10,7 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.util.Color;
 
 /**
@@ -143,17 +144,25 @@ public final class Constants {
   }
 
   public static final class LEDConstants {
-     // LED
-    public static final int LED_LEFT_START = 0;
-    public static final int LED_LEFT_END = 0;
-    public static final int LED_RIGHT_START = 0;
-    public static final int LED_RIGHT_END = 0;
 
-    // LED Color
-    public static final Color LED_RED = new Color(255, 0, 0);
-    public static final Color LED_GREEN = new Color(0, 255, 0);
-    public static final Color LED_BLUE = new Color(0, 0, 255);
-    public static final Color LED_OFF = new Color(0, 0, 0);
+    public static final int LED_PWM_PORT = 0;   
+    public static final int LED_LENGTH = 60;    
+
+ 
+    public static final Color LED_OFF = Color.kBlack;
+    public static final Color LED_RED = Color.kRed;
+    public static final Color LED_GREEN = Color.kGreen;
+    public static final Color LED_BLUE = Color.kBlue;
+    public static final Color LED_YELLOW = Color.kYellow;
+    public static final Color LED_WHITE = Color.kWhite;
+
+
+    
+    public static final int LED_LEFT_START = 0;
+    public static final int LED_LEFT_END = (LED_LENGTH / 2) - 1;
+
+    public static final int LED_RIGHT_START = LED_LENGTH / 2;
+    public static final int LED_RIGHT_END = LED_LENGTH - 1;
     
   }
   

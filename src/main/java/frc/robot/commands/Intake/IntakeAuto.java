@@ -10,24 +10,28 @@ import frc.robot.Constants.IntakeConstants.IntakeAction;
 import frc.robot.Constants.IntakeConstants.IntakeState;
 import frc.robot.subsystems.AngleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LED;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class IntakeAuto extends Command {
   private IntakeSubsystem intakeSubsystem;
   private IntakeAction intakeAction;
   private AngleSubsystem angleSubsystem;
+  private LED led;
   private Timer timer = new Timer();
   private boolean ballDetected = false;
   /** Creates a new IntakeAuto. */
   public IntakeAuto(
     IntakeSubsystem intakeSubsystem,
     IntakeAction intakeAction,
-    AngleSubsystem angleSubsystem
+    AngleSubsystem angleSubsystem,
+    LED led
   ) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.intakeSubsystem = intakeSubsystem;
     this.intakeAction = intakeAction;
     this.angleSubsystem = angleSubsystem;
+    this.led = led;
   }
 
   // Called when the command is initially scheduled.
@@ -35,6 +39,7 @@ public class IntakeAuto extends Command {
   public void initialize() {
     intakeSubsystem.setIntakeAction(intakeAction);
     angleSubsystem.setState(IntakeState.kGetBall);
+    led.setIntakeActive(true);
     timer.reset();
     timer.stop();
     ballDetected = false;
@@ -45,6 +50,8 @@ public class IntakeAuto extends Command {
   public void execute() {
     if (!ballDetected && intakeSubsystem.getBall()) {
       ballDetected = true;
+      led.setIntakeActive(false);
+      led.setHasBall(true);
       timer.reset();
       timer.start();
     }
@@ -59,6 +66,7 @@ public class IntakeAuto extends Command {
   public void end(boolean interrupted) {
     intakeSubsystem.setIntakeAction(IntakeAction.kStop);
     angleSubsystem.setState(IntakeState.kDefult);
+    led.setHasBall(false);
     timer.stop();
   }
 

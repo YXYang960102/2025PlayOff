@@ -12,13 +12,13 @@ import frc.robot.subsystems.LED;
 import frc.robot.subsystems.ShooterSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ShooterAuto extends Command {
+public class ShooterRobotBreaker extends Command {
+  /** Creates a new ShooterRobotBreaker. */
   private ShooterSubsystem shooterSubsystem;
   private IntakeSubsystem intakeSubsystem;
   private LED led;
   private Timer timer = new Timer();
-  /** Creates a new ShooterAuto. */
-  public ShooterAuto(
+  public ShooterRobotBreaker(
     ShooterSubsystem shooterSubsystem,
     IntakeSubsystem intakeSubsystem,
     LED led
@@ -35,25 +35,21 @@ public class ShooterAuto extends Command {
   public void initialize() {
     timer.reset();
     timer.start();
-    led.setShooterActive(true);
-    shooterSubsystem.setShooterAction();
+    led.setShooterBreaker(true);
+    shooterSubsystem.setShooterRobotBreaker();;
     intakeSubsystem.setIntakeAction(IntakeAction.kShoote);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    // if (timer.hasElapsed(1.0)) { // pass 1 sencond
-    //   intakeSubsystem.setIntakeAction(IntakeAction.kShoote); // start intake
-    // }
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     shooterSubsystem.StopMotor();
     intakeSubsystem.setIntakeAction(IntakeAction.kStop);
-    led.setShooterActive(false);
+    led.setShooterBreaker(false);
     timer.stop();
   }
 

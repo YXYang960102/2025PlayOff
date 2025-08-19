@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.AngleSubsystem;
 import frc.robot.subsystems.DriverTrain;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LED;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.IntakeConstants.AngleAction;
@@ -50,6 +51,7 @@ public class RobotContainer {
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final AngleSubsystem angleSubsystem = new AngleSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  private final LED led = new LED(1, 118);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private static CommandXboxController m_driverController = new CommandXboxController(
@@ -95,17 +97,16 @@ public class RobotContainer {
     m_driverController.y().whileTrue(new IntakeNormal(intakeSubsystem, IntakeAction.kRev));
 
     // Intake Auto
-    m_driverController.a().onTrue(new IntakeAuto(intakeSubsystem, IntakeAction.kGet, angleSubsystem));
+    m_driverController.a().onTrue(new IntakeAuto(intakeSubsystem, IntakeAction.kGet, angleSubsystem, led));
 
     // shooter normal
-    m_operatorController.b().toggleOnTrue(new ShooterNormal(shooterSubsystem));
-    // m_operatorController.leftBumper().onTrue(new ShooterNormal(shooterSubsystem));
+    
 
     // Shooter Auto
-    m_operatorController.a().onTrue(new ShooterAuto(shooterSubsystem, intakeSubsystem));
+    m_operatorController.y().onTrue(new ShooterAuto(shooterSubsystem, intakeSubsystem, led));
 
     //shoote Proccesor
-    m_operatorController.y().onTrue(new ShooteProccesor(shooterSubsystem, intakeSubsystem));
+    m_operatorController.a().onTrue(new ShooteProccesor(shooterSubsystem, intakeSubsystem, led));
   }
 
   private void configureNamedCommands() {
