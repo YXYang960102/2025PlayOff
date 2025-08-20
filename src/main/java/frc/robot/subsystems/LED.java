@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.LEDPattern;
+import edu.wpi.first.wpilibj.LEDPattern.GradientType;
 import edu.wpi.first.wpilibj.util.Color;
 
 import edu.wpi.first.units.Units;
@@ -71,14 +72,15 @@ public class LED extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     if (shooterActive) {
-      // 射手啟動 → 彩虹跑馬燈 (用絕對速度)
-      LEDPattern base = LEDPattern.rainbow(255, 255);
+      LEDPattern base = LEDPattern.gradient(GradientType.kContinuous ,Color.kFloralWhite, Color.kBlack);
 
-      // 每秒跑 50 cm，大概 59 顆 LED
-      Distance ledSpacing = Units.Centimeters.of(100.0 / 118.0);
-      m_currentPattern = base.scrollAtAbsoluteSpeed(
-          Units.Centimeters.per(Units.Second).of(50), // 調整速度
-          ledSpacing);
+// 每秒跑 50 cm，大概 59 顆 LED
+Distance ledSpacing = Units.Centimeters.of(100.0 / 118.0);
+
+m_currentPattern = base.scrollAtAbsoluteSpeed(
+    Units.Centimeters.per(Units.Second).of(50), // 調整速度
+    ledSpacing
+);
 
     } else if (shooterReverseActive) {
       // 逆發射 → 閃爍黃燈

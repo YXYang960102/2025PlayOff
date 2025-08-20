@@ -18,6 +18,8 @@ public class ShooterRobotBreaker extends Command {
   private IntakeSubsystem intakeSubsystem;
   private LED led;
   private Timer timer = new Timer();
+  private boolean step2Done = false;
+
   public ShooterRobotBreaker(
     ShooterSubsystem shooterSubsystem,
     IntakeSubsystem intakeSubsystem,
@@ -35,14 +37,21 @@ public class ShooterRobotBreaker extends Command {
   public void initialize() {
     timer.reset();
     timer.start();
+    step2Done = false;
     led.setShooterBreaker(true);
-    shooterSubsystem.setShooterRobotBreaker();;
-    intakeSubsystem.setIntakeAction(IntakeAction.kBreaker);
+    shooterSubsystem.setShooterRobotBreakerR();
+    // intakeSubsystem.setIntakeAction(IntakeAction.kBreaker);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    if (!step2Done && timer.hasElapsed(1.0)) {
+      step2Done = true;
+      shooterSubsystem.setShooterRobotBreakerL();
+      intakeSubsystem.setIntakeAction(IntakeAction.kBreaker);
+    }
+  }
 
   // Called once the command ends or is interrupted.
   @Override
@@ -56,6 +65,6 @@ public class ShooterRobotBreaker extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return timer.hasElapsed(2.0);
+    return timer.hasElapsed(2.5);
   }
 }

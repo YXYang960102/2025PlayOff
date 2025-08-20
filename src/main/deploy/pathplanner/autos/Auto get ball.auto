@@ -40,6 +40,18 @@
               }
             ]
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoote Ball"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoShoote"
+          }
         }
       ]
     }

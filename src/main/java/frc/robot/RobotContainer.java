@@ -112,11 +112,16 @@ public class RobotContainer {
 
     //shoote Proccesor
     m_operatorController.a().onTrue(new ShooteProccesor(shooterSubsystem, intakeSubsystem, led));
+
+    //shooter Rev
+    m_operatorController.rightTrigger().whileTrue(new ShooterNormal(shooterSubsystem, true));
+    m_operatorController.leftTrigger().whileTrue(new ShooterNormal(shooterSubsystem, false));
   }
 
   private void configureNamedCommands() {
     NamedCommands.registerCommand("IntakeL1", new AutoIntakeL1(intakeSubsystem));
-    NamedCommands.registerCommand("AutoGetBall", new AutoIntakeGetBall(intakeSubsystem, IntakeAction.kGet));
+    NamedCommands.registerCommand("AutoGetBall", new AutoIntakeGetBall(intakeSubsystem, IntakeAction.kGet, led));
+    NamedCommands.registerCommand("AutoShoote", new ShooterAuto(shooterSubsystem, intakeSubsystem, led));
   }
 
   private void setDefaultCommand() {

@@ -11,13 +11,16 @@ import frc.robot.subsystems.ShooterSubsystem;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class ShooterNormal extends Command {
   private ShooterSubsystem shooterSubsystem;
+  private boolean isFwd = true;
   // private ShooterAction shooterAction;
   /** Creates a new ShooterNormal. */
   public ShooterNormal(
-    ShooterSubsystem shooterSubsystem
+    ShooterSubsystem shooterSubsystem,
+    boolean isFwd
   ) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.shooterSubsystem = shooterSubsystem;
+    this.isFwd = isFwd;
     // this.shooterAction = shooterAction;
     addRequirements(shooterSubsystem);
   }
@@ -25,7 +28,11 @@ public class ShooterNormal extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    if(isFwd) {
     shooterSubsystem.setShooterAction();
+    } else {
+    shooterSubsystem.setShooterRev();
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -35,7 +42,7 @@ public class ShooterNormal extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooterSubsystem.StopMotor();;
+    shooterSubsystem.StopMotor();
   }
 
   // Returns true when the command should end.

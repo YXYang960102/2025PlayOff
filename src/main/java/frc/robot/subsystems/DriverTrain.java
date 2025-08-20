@@ -84,6 +84,7 @@ public class DriverTrain extends SubsystemBase {
     BACK_RIGHT_MOTOR.configure(BACK_RIGHT_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     drive.setDeadband(0.05);
+    drive.setSafetyEnabled(false);
 
     odometry = new DifferentialDriveOdometry(
         getOdometryAngle(),
@@ -135,9 +136,9 @@ public class DriverTrain extends SubsystemBase {
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
     FRONT_LEFT_MOTOR.setVoltage(leftVolts);
-    BACK_LEFT_MOTOR.setVoltage(leftVolts);
+    // BACK_LEFT_MOTOR.setVoltage(leftVolts);
     FRONT_RIGHT_MOTOR.setVoltage(rightVolts);
-    BACK_RIGHT_MOTOR.setVoltage(rightVolts);
+    // BACK_RIGHT_MOTOR.setVoltage(rightVolts);
     drive.feed();
   }
 

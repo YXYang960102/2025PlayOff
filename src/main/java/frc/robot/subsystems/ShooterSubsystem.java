@@ -58,9 +58,12 @@ public class ShooterSubsystem extends SubsystemBase {
     SHOOTER_RIGHT_MOTOR.set(ShooterConstants.kRev);
   }
 
-  public void setShooterRobotBreaker() {
-    SHOOTER_LEFT_MOTOR.set(0.8);
+  public void setShooterRobotBreakerR() {
     SHOOTER_RIGHT_MOTOR.set(1.0);
+  }
+
+  public void setShooterRobotBreakerL() {
+    SHOOTER_LEFT_MOTOR.set(0.8);
   }
 
   public void StopMotor() {

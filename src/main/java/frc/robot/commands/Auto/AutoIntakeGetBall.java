@@ -8,28 +8,33 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.IntakeConstants.IntakeAction;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LED;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class AutoIntakeGetBall extends Command {
   /** Creates a new AutoIntakeGetBall. */
   private IntakeSubsystem intakeSubsystem;
   private IntakeAction intakeAction;
+  private LED led;
   private Timer timer = new Timer();
   private boolean ballDetected = false;
   public AutoIntakeGetBall(
     IntakeSubsystem intakeSubsystem,
-    IntakeAction intakeAction
+    IntakeAction intakeAction,
+    LED led
   ) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.intakeSubsystem = intakeSubsystem;
     this.intakeAction = intakeAction;
-    addRequirements(intakeSubsystem);
+    this.led = led;
+    addRequirements(intakeSubsystem, led);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     intakeSubsystem.setIntakeAction(intakeAction);
+    led.setIntakeActive(true);
     timer.reset();
     timer.stop();
     ballDetected = false;
@@ -40,6 +45,8 @@ public class AutoIntakeGetBall extends Command {
   public void execute() {
     if (!ballDetected && intakeSubsystem.getBall()) {
       ballDetected = true;
+      led.setIntakeActive(false);
+      led.setHasBall(true);
       timer.reset();
       timer.start();
     }
@@ -53,6 +60,7 @@ public class AutoIntakeGetBall extends Command {
   @Override
   public void end(boolean interrupted) {
     intakeSubsystem.setIntakeAction(IntakeAction.kStop);
+    led.setHasBall(false);
     timer.stop();
   }
 

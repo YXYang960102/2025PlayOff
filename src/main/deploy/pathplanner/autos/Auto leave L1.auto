@@ -7,13 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Example Path"
+            "pathName": "auto leave"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeL1"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Auto Leave L1",
   "choreoAuto": false
 }
