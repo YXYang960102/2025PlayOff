@@ -75,7 +75,7 @@ public class LED extends SubsystemBase {
       LEDPattern base = LEDPattern.gradient(GradientType.kContinuous ,Color.kFloralWhite, Color.kBlack);
 
 // 每秒跑 50 cm，大概 59 顆 LED
-Distance ledSpacing = Units.Centimeters.of(100.0 / 118.0);
+Distance ledSpacing = Units.Centimeters.of(100.0 / 53.0);
 
 m_currentPattern = base.scrollAtAbsoluteSpeed(
     Units.Centimeters.per(Units.Second).of(50), // 調整速度

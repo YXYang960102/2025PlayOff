@@ -3,10 +3,12 @@
   "robotLength": 0.9,
   "holonomicMode": false,
   "pathFolders": [
-    "Auto leave"
+    "Auto leave",
+    "Auto shoote Ball"
   ],
   "autoFolders": [
-    "Auto Leave L1"
+    "Auto Leave L1",
+    "Left positon"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,

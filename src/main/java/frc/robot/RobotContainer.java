@@ -53,7 +53,7 @@ public class RobotContainer {
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final AngleSubsystem angleSubsystem = new AngleSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-  private final LED led = new LED(1, 118);
+  private final LED led = new LED(1, 53);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private static CommandXboxController m_driverController = new CommandXboxController(

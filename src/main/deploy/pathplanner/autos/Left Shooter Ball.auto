@@ -1,0 +1,62 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left position"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeL1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left back"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left Get ball"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoGetBall"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Left Shoote ball"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoShoote"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Left positon",
+  "choreoAuto": false
+}
