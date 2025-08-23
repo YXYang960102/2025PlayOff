@@ -11,6 +11,12 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.5
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "IntakeL1"
@@ -23,15 +29,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Left Get ball"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoGetBall"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Left Get ball"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoGetBall"
+                }
+              }
+            ]
           }
         },
         {

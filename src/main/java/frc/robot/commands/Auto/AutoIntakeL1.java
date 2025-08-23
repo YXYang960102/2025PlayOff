@@ -27,7 +27,7 @@ public class AutoIntakeL1 extends Command {
   public void initialize() {
     timer.reset();
     timer.start();
-    intakeSubsystem.setIntakeAction(IntakeAction.kGet);
+    intakeSubsystem.setIntakeAction(IntakeAction.kAuto);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

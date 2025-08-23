@@ -109,6 +109,7 @@ public final class Constants {
       kShoote(0.6),
       kBreaker(0.8),
       kRev(-0.3),
+      kAuto(0.3),
       kStop(0);
 
       public final double rate;

@@ -31,6 +31,8 @@ public class IntakeAllDefault extends InstantCommand {
     this.angleSubsystem = angleSubsystem;
     this.shooterSubsystem = shooterSubsystem;
     this.led = led;
+
+    addRequirements(intakeSubsystem, angleSubsystem, shooterSubsystem, led);
   }
 
   // Called when the command is initially scheduled.

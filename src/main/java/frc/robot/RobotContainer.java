@@ -90,9 +90,11 @@ public class RobotContainer {
     // Intake state normal
     m_driverController.pov(0).whileTrue(new IntakeStateNormal(angleSubsystem, AngleAction.kUP));
     m_driverController.pov(180).whileTrue(new IntakeStateNormal(angleSubsystem, AngleAction.kDown));
+
+    m_driverController.rightBumper().whileTrue(new IntakeNormal(intakeSubsystem, IntakeAction.kAuto));
     
-    m_driverController.leftBumper().onTrue(new IntakeStateAuto(angleSubsystem, IntakeState.kDefult));
-    m_driverController.rightBumper().onTrue(new IntakeStateAuto(angleSubsystem, IntakeState.kGetBall));
+    // m_driverController.leftBumper().onTrue(new IntakeStateAuto(angleSubsystem, IntakeState.kDefult));
+    // m_driverController.rightBumper().onTrue(new IntakeStateAuto(angleSubsystem, IntakeState.kGetBall));
 
     // Intake normal
     m_driverController.x().whileTrue(new IntakeNormal(intakeSubsystem, IntakeAction.kGet));
